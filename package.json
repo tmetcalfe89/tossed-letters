@@ -1,10 +1,11 @@
 {
-  "name": "idle-game",
+  "name": "tossed-letters",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-use": "^17.4.0"
   },
   "devDependencies": {
     "gh-pages": "^4.0.0",
@@ -34,5 +35,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://tmetcalfe89.github.io/idle-game/"
+  "homepage": "https://tmetcalfe89.github.io/tossed-letters/"
 }

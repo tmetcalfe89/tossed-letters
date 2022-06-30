@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header,
+footer {
+  height: 10vh;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 50vh;
+}
+
+header {
+  font-family: Lobster;
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.guesses {
+  text-align: center;
+  border-radius: 0.25rem;
+  border: none;
+  font-family: Roboto;
+  font-size: 20px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.author {
+  font-family: Lobster;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.author::before {
+  content: "- ";
+}
