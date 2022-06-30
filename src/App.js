@@ -21,10 +21,9 @@ function App() {
   };
 
   const checkIsValidWord = async (word) => {
-    const response = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
-    );
-    return response.ok && !guesses.includes(word) && word.length >= 3;
+    const response = await fetch(`https://tim-word-api.herokuapp.com/${word}`);
+    const body = await response.json();
+    return body.good && !guesses.includes(word) && word.length >= 3;
   };
 
   const addToGuess = (letter) => {
@@ -40,8 +39,8 @@ function App() {
   const submitGuess = async () => {
     const isValidWord = await checkIsValidWord(currentGuess);
     if (!isValidWord) return;
-    setGuesses([...guesses, currentGuess]);
-    setCurrentGuess("");
+    setGuesses((guesses) => [...guesses, currentGuess]);
+    setCurrentGuess(() => "");
   };
 
   useKey([], (e) => {
@@ -98,6 +97,12 @@ function App() {
           Words from{" "}
           <a href="https://random-word-api.herokuapp.com/home">
             random-word-api
+          </a>
+        </div>
+        <div>
+          Word verification from{" "}
+          <a href="https://dictionaryapi.com/">
+            Merriam-Webster's Dictionary API
           </a>
         </div>
       </footer>
