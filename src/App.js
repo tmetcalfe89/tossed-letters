@@ -21,7 +21,9 @@ function App() {
   };
 
   const checkIsValidWord = async (word) => {
-    const response = await fetch(`https://tim-word-api.herokuapp.com/${word}`);
+    const response = await fetch(
+      `https://tim-word-api.herokuapp.com/api/words/${word}/check`
+    );
     const body = await response.json();
     return body.good && !guesses.includes(word) && word.length >= 3;
   };
