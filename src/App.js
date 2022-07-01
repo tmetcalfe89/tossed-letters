@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import { useKey, useLocalStorage } from "react-use";
 import Phrase from "./components/Phrase";
 import { countLetter, createCompoundClassString, jumbleWord } from "./util";
-import { useKey } from "react-use";
 import "./App.css";
 
 const theAlphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -14,7 +15,8 @@ function App() {
   const [word, setWord] = useState();
   const [jumbledWord, setJumbledWord] = useState();
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guesses, setGuesses] = useState([]);
+  const [guesses, setGuesses] = useLocalStorage("guesses", []);
+  const [submittingGuess, setSubmittingGuess] = useState(false);
 
   const fetchWord = async () => {
     const response = await fetch(`${apiHost}/api/rand/12`);
@@ -22,10 +24,24 @@ function App() {
     return word;
   };
 
+  const wordErrors = {
+    UNRECOGNIZED: (word) => `${word} is not a recognized word.`,
+    ALREADY_USED: (word) => `${word} was already used.`,
+    TOO_SHORT: (word) => `${word} is less than 3 letters long.`,
+  };
   const checkIsValidWord = async (word) => {
+    if (guesses.includes(word)) {
+      return wordErrors.ALREADY_USED;
+    } else if (word.length < 3) {
+      return wordErrors.TOO_SHORT;
+    }
     const response = await fetch(`${apiHost}/api/words/${word}/check`);
     const body = await response.json();
-    return body.good && !guesses.includes(word) && word.length >= 3;
+    if (!body.good) {
+      return wordErrors.UNRECOGNIZED;
+    } else {
+      return true;
+    }
   };
 
   const addToGuess = (letter) => {
@@ -39,10 +55,18 @@ function App() {
   };
 
   const submitGuess = async () => {
-    const isValidWord = await checkIsValidWord(currentGuess);
-    if (!isValidWord) return;
-    setGuesses((guesses) => [...guesses, currentGuess]);
+    if (submittingGuess) {
+      return;
+    }
     setCurrentGuess(() => "");
+    setSubmittingGuess(true);
+    const currentGuessI = currentGuess;
+    const isValidWord = await checkIsValidWord(currentGuessI);
+    setSubmittingGuess(false);
+    if (isValidWord !== true) {
+      return toast(isValidWord(currentGuessI));
+    }
+    setGuesses([...guesses, currentGuessI]);
   };
 
   useKey([], (e) => {
@@ -73,6 +97,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <header>Tossed Letters</header>
       <main>
         <Phrase
