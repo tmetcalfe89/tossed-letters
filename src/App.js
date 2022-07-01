@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { useKey, useLocalStorage } from "react-use";
+import { useInterval, useKey, useLocalStorage } from "react-use";
 import Phrase from "./components/Phrase";
-import { countLetter, createCompoundClassString, jumbleWord } from "./util";
+import {
+  countLetter,
+  createCompoundClassString,
+  getTodayStringified,
+  jumbleWord,
+} from "./util";
 import "./App.css";
 
 const theAlphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -12,11 +17,16 @@ const apiHost =
     : "https://tim-word-api.herokuapp.com";
 
 function App() {
-  const [word, setWord] = useState();
+  const [word, setWord] = useLocalStorage("word", undefined);
   const [jumbledWord, setJumbledWord] = useState();
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useLocalStorage("guesses", []);
+  const [historicalGuesses, setHistoricalGuesses] = useLocalStorage(
+    "historicalGuesses",
+    []
+  );
   const [submittingGuess, setSubmittingGuess] = useState(false);
+  const [fetchNewWord, setFetchNewWord] = useState(false);
 
   const fetchWord = async () => {
     const response = await fetch(`${apiHost}/api/rand/12`);
@@ -79,21 +89,37 @@ function App() {
     }
   });
 
+  useInterval(() => {
+    setFetchNewWord(true);
+  }, 10e3);
+
   useEffect(() => {
     if (!word) return;
     setJumbledWord(jumbleWord(word));
   }, [word]);
 
   useEffect(() => {
+    if (!fetchNewWord) return;
     let cancelled = false;
 
     fetchWord().then((newWord) => {
       if (cancelled) return;
-      setWord(newWord);
+      if (newWord !== word) {
+        setHistoricalGuesses([
+          ...historicalGuesses,
+          {
+            date: getTodayStringified(),
+            guesses,
+          },
+        ]);
+        setGuesses([]);
+        setWord(newWord);
+      }
+      setFetchNewWord(false);
     });
 
     return () => (cancelled = true);
-  }, []);
+  }, [fetchNewWord]);
 
   return (
     <>

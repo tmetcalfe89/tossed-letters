@@ -22,3 +22,10 @@ export const isLetter = (string = "") =>
 
 export const createCompoundClassString = (...classes) =>
   classes.filter((thisClass) => thisClass).join(" ");
+
+export function getTodayStringified() {
+  const pstString = new Date().toLocaleString("en-US", {
+    timeZone: "PST",
+  });
+  return pstString.split(",")[0];
+}
