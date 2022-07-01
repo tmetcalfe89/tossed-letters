@@ -88,7 +88,7 @@ function App() {
           onSelectLetter={addToGuess}
         />
         <Phrase phrase={currentGuess} onSelectLetter={removeFromGuess} />
-        <div className="guesses">{guesses.join(", ")}</div>
+        <div className="guesses">{guesses.sort().join(", ")}</div>
       </main>
       <footer>
         <div>
