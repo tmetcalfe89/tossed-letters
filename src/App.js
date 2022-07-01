@@ -17,11 +17,9 @@ function App() {
   const [guesses, setGuesses] = useState([]);
 
   const fetchWord = async () => {
-    const response = await fetch(
-      "https://random-word-api.herokuapp.com/word?length=12"
-    );
-    const wordList = await response.json();
-    return wordList[0];
+    const response = await fetch(`${apiHost}/api/rand/12`);
+    const { word } = await response.json();
+    return word;
   };
 
   const checkIsValidWord = async (word) => {
