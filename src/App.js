@@ -109,6 +109,7 @@ function App() {
           ...historicalGuesses,
           {
             date: getTodayStringified(),
+            word,
             guesses,
           },
         ]);
