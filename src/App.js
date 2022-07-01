@@ -5,6 +5,10 @@ import { useKey } from "react-use";
 import "./App.css";
 
 const theAlphabet = "abcdefghijklmnopqrstuvwxyz";
+const apiHost =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:3001"
+    : "https://tim-word-api.herokuapp.com";
 
 function App() {
   const [word, setWord] = useState();
@@ -21,9 +25,7 @@ function App() {
   };
 
   const checkIsValidWord = async (word) => {
-    const response = await fetch(
-      `https://tim-word-api.herokuapp.com/api/words/${word}/check`
-    );
+    const response = await fetch(`${apiHost}/api/words/${word}/check`);
     const body = await response.json();
     return body.good && !guesses.includes(word) && word.length >= 3;
   };
