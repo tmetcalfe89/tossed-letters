@@ -134,9 +134,9 @@ function App() {
                 countLetter(jumbledWord.slice(0, i + 1), letter) && "hidden"
             )
           }
-          onSelectLetter={addToGuess}
+          onSelectLetter={() => setJumbledWord(jumbleWord(word))}
         />
-        <Phrase phrase={currentGuess} onSelectLetter={removeFromGuess} />
+        <Phrase phrase={currentGuess} />
         <div className="guesses">{guesses.sort().join(", ")}</div>
       </main>
       <footer>
