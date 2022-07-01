@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/tossed-letters/static/css/main.20f743a7.css",
-    "main.js": "/tossed-letters/static/js/main.1246d7cb.js",
+    "main.js": "/tossed-letters/static/js/main.e6aaca4a.js",
     "index.html": "/tossed-letters/index.html",
     "main.20f743a7.css.map": "/tossed-letters/static/css/main.20f743a7.css.map",
-    "main.1246d7cb.js.map": "/tossed-letters/static/js/main.1246d7cb.js.map"
+    "main.e6aaca4a.js.map": "/tossed-letters/static/js/main.e6aaca4a.js.map"
   },
   "entrypoints": [
     "static/css/main.20f743a7.css",
-    "static/js/main.1246d7cb.js"
+    "static/js/main.e6aaca4a.js"
   ]
 }
