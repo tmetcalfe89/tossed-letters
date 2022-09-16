@@ -26,7 +26,7 @@ function App() {
     []
   );
   const [submittingGuess, setSubmittingGuess] = useState(false);
-  const [fetchNewWord, setFetchNewWord] = useState(false);
+  const [fetchNewWord, setFetchNewWord] = useState(true);
 
   const fetchWord = async () => {
     const response = await fetch(`${apiHost}/api/rand/12`);
