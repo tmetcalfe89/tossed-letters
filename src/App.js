@@ -14,7 +14,7 @@ const theAlphabet = "abcdefghijklmnopqrstuvwxyz";
 const apiHost =
   process.env.NODE_ENV === "development"
     ? "http://localhost:3001"
-    : "https://tim-word-api.herokuapp.com";
+    : "https://word-api-fja9.onrender.com";
 
 function App() {
   const [word, setWord] = useLocalStorage("word", undefined);
